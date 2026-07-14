@@ -19,7 +19,7 @@ A production-ready, secure e-commerce platform featuring **WebAuthn biometric au
 
 ## Overview
 
-SmartTrade Africa is a full-featured secure e-commerce web application designed for the African market with a focus on **security**, **trust**, and **accessibility**. The platform integrates cryptographic biometric authentication, device trust fingerprinting, a mock payment gateway, and comprehensive role-based workflows for buyers, sellers, and administrators.
+SmartTrade Africa is a full-featured secure e-commerce web application designed for the African market with a focus on **security**, **trust**, and **accessibility**. The platform integrates crypt[...]
 
 ### Key Highlights
 
@@ -155,12 +155,26 @@ SmartTrade Africa is a full-featured secure e-commerce web application designed 
 
 ### Default Admin Credentials
 
+The application comes with a default admin account for initial setup:
+
 ```
 Username: admin
 Password: Admin@123456
 ```
 
-⚠️ **Change these credentials immediately in production!**
+⚠️ **IMPORTANT SECURITY WARNINGS:**
+
+1. **Change these credentials immediately** after first login in production environments
+2. **Never commit `.env` files** containing sensitive credentials to version control
+3. **Regenerate encryption keys** for production deployments
+4. **Use environment variables** or a secrets manager (HashiCorp Vault, AWS Secrets Manager) for production credentials
+
+**First Login Steps:**
+1. Navigate to `https://localhost:5000/auth/login`
+2. Enter username: `admin` and password: `Admin@123456`
+3. Complete biometric setup (fingerprint/face or PIN)
+4. Go to `/auth/profile` and immediately change the password
+5. Update other security settings as needed
 
 ---
 
@@ -201,7 +215,9 @@ smartTrade-e-commerce/
 ├── run.py                               # HTTPS entry point
 ├── seed.py                              # Database seeder
 ├── requirements.txt                     # Python dependencies
-├── .env                                 # Environment variables
+├── .env                                 # Environment variables (excluded from git)
+├── .env.example                         # Environment template
+├── .gitignore                           # Git exclusions
 └── ssl/                                 # mkcert certificates (HTTPS)
 ```
 
@@ -359,6 +375,8 @@ Username: admin
 Password: Admin@123456
 ```
 
+⚠️ **Default credentials are for development/testing only. Change immediately in production.**
+
 ### Test Payment Methods
 
 **Credit/Debit Card:**
@@ -445,6 +463,7 @@ Password: Admin@123456
 - [ ] Configure email service for password resets
 - [ ] Enable audit logging and monitoring
 - [ ] Implement proper logging and error handling
+- [ ] Store `.env` variables in a secrets manager (not in repository)
 
 ### Docker Deployment (Optional)
 
